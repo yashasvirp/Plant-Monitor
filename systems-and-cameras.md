@@ -2,7 +2,7 @@
 # Systems and Cameras
 
 
-<a id="orgb211d61"></a>
+<a id="orgf129c98"></a>
 
 ## Raspberry Pi, Arduino, Jetson
 
@@ -40,7 +40,7 @@ We focus on Raspberry Pi, Jetson
     -   Sketchy software support
 
 
-<a id="org9a94243"></a>
+<a id="org6901a9c"></a>
 
 ## Interfacing with the System
 
@@ -50,7 +50,7 @@ We focus on Raspberry Pi, Jetson
     -   Useful for production deployment
 
 
-<a id="org2686cb5"></a>
+<a id="org8bcae5e"></a>
 
 ### Generating user/password for initial login (RPI)
 
@@ -65,7 +65,7 @@ We focus on Raspberry Pi, Jetson
         Paste in `userconf.txt`
 
 
-<a id="org29eaf49"></a>
+<a id="org0803938"></a>
 
 ### Connecting to via LAN (RPI, Jetson)
 
@@ -119,7 +119,7 @@ We focus on Raspberry Pi, Jetson
     ```
 
 
-<a id="orgc03e319"></a>
+<a id="orgf97faea"></a>
 
 ### Connecting with SSH keys (RPI, Jetson)
 
@@ -132,7 +132,7 @@ ssh-copy-id user@pi_addr
 -   You can also have multiple keys but we won't discuss that here.
 
 
-<a id="org3cd53e8"></a>
+<a id="org7158afe"></a>
 
 ## Configuration options (RPI)
 
@@ -145,12 +145,12 @@ ssh-copy-id user@pi_addr
 -   `dt_overlay`
 
 
-<a id="org3821ce0"></a>
+<a id="org7c9edf6"></a>
 
 ## Serial Communication (RPI)
 
 
-<a id="orgea4343b"></a>
+<a id="org69be209"></a>
 
 ### The Raspberry Pi GPIO
 
@@ -169,14 +169,14 @@ But we'll disable the serial console and enable UART See <https://www.raspberryp
 For details on Raspberry Pi UART device tree, see:<br/> <https://www.raspberrypi.com/documentation/computers/configuration.html#uarts-and-device-tree>
 
 
-<a id="orgab7130b"></a>
+<a id="orgd413bb5"></a>
 
 ### Jetson GPIO
 
 We had a lot of trouble communicating with the Jetson GPIO that we had, so we decided to skip that entirely and use a USB to Serial module.
 
 
-<a id="org03f1768"></a>
+<a id="orge752265"></a>
 
 ### USB to Serial (RPI, Jetson)
 
@@ -185,14 +185,14 @@ The module that we found useful is a CP2102 USB to Serial converter. See <https:
 Essentially you can attach it to a free USB port and communicate via UART with the required sensor/driver/expansion board.
 
 
-<a id="org1b2250d"></a>
+<a id="org06e380a"></a>
 
 ### I2C Communication
 
-**TODO**
+We don't have any modules with I2C so we won't discuss it.
 
 
-<a id="org1111911"></a>
+<a id="org84ab84a"></a>
 
 ## Cameras with RPi (RPI)
 
@@ -208,7 +208,7 @@ Essentially you can attach it to a free USB port and communicate via UART with t
     -   There are several other camera manufacturer alternatives for both RPI and Jetson
 
 
-<a id="orgf716123"></a>
+<a id="orgc131505"></a>
 
 ## Cameras with Jetson (Jetson)
 
@@ -217,12 +217,12 @@ RPi cameras will also work with Jetson in most cases
 We could not get autofocus/motorized focus cameras to work with RPis but they work with Jetson. This is probably because of some differences from RPi 3 -> 4 device changes
 
 
-<a id="org4904e8c"></a>
+<a id="org0146ffc"></a>
 
 ## Code
 
 
-<a id="orge53215c"></a>
+<a id="org3e39893"></a>
 
 ### Basic Image Processing with opencv (RPi, Jetson)
 
@@ -313,7 +313,7 @@ We could not get autofocus/motorized focus cameras to work with RPis but they wo
         ```
 
 
-<a id="orge097da1"></a>
+<a id="orgbeac41a"></a>
 
 ### Taking pictures and videos with libcamera (RPi)
 
@@ -390,7 +390,7 @@ We could not get autofocus/motorized focus cameras to work with RPis but they wo
     ```
 
 
-<a id="orga34ae87"></a>
+<a id="org8ae0f5c"></a>
 
 ### Taking pictures and videos with opencv (RPi, Jetson)
 
@@ -457,11 +457,11 @@ Opencv capture can be used with python and various backends.
 -   For Opencv capture in RPi and Jetson capture with `gstreamer` it's a bit more complicated.<br/> We'll have to define a `gstreamer` pipeline and use that to capture the frames.<br/> There are separate arguments for `gstreamer` in RPi, Jetson and laptop
     
     ```python
-    def jetson_pipeline(capture_width=1280, capture_height=720, display_width=1280,
-                        display_height=720, framerate=60, flip_method=0):
-        args = ["nvarguscamerasrc",
+    def jetson_pipeline(sensor_id=0, capture_width=1280, capture_height=720,
+                        display_width=1280, display_height=720, flip_method=0):
+        args = [f"nvarguscamerasrc sensor-id={sensor_id}",
                 f"video/x-raw(memory:NVMM), width={int(capture_width)}, height={int(capture_height)},"
-                + f" format=NV12, framerate={framerate}",
+                " format=NV12",
                 f"nvvidconv flip-method={int(flip_method)}",
                 f"video/x-raw, width={int(display_width)}, height={int(display_height)}, format=BGRx",
                 "videoconvert",
@@ -470,7 +470,6 @@ Opencv capture can be used with python and various backends.
         return " ! ".join(args)
     
     
-    # Doesn't support "framerate" argument
     def pi_pipeline(capture_width=1280, capture_height=720,
                     display_width=1280, display_height=720, flip_180=False):
         args = ["libcamerasrc",
@@ -484,7 +483,7 @@ Opencv capture can be used with python and various backends.
         return (" ! ".join(args))
     
     
-    def laptop_pipeline(capture_width=1280, capture_height=720, framerate=60,
+    def laptop_pipeline(capture_width=1280, capture_height=720,
                     display_width=1280, display_height=720, flip_180=False):
         # leave params as default
         args = ["v4l2src device=/dev/video0", f"video/x-raw"]
@@ -495,4 +494,138 @@ Opencv capture can be used with python and various backends.
             args.append(f"video/x-raw, width={int(display_width)}, height={int(display_height)}")
         args.append("appsink")
         return (" ! ".join(args))
+    ```
+
+
+<a id="org05fa660"></a>
+
+### Basic Flask Service
+
+```python
+from flask import Flask
+from werkzeug import serving
+
+app = Flask()
+
+@app.route("/ping")
+def ping():
+    return "pong"
+
+
+# Binds on ALL IP addresses
+# Accessible from networks, if no firewall is up
+serving.run_simple("0.0.0.0", 8282, app)
+
+# Runs on localhost only
+# Not accessible outside the current system
+serving.run_simple("127.0.0.1", 8282, app)
+```
+
+
+<a id="org97fda26"></a>
+
+### Flask Service for Capturing and sending an image
+
+-   Server
+    
+    ```python
+    import sys
+    import base64
+    
+    
+    from flask import Flask
+    from werkzeug import serving
+    
+    import cv2 as cv
+    
+    app = Flask()
+    
+    def capture_system():
+        if cap.isOpened():
+            return cv.VideoCapture(0) # for laptop
+    
+    def pi_capture(width, height):
+        gp = "libcamerasrc ! video/x-raw, width=1280, height=720 ! appsink"
+        cap = cv.videocapture(gp, cv.CAP_GSTREAMER)
+        if cap.isOpened():
+            return cap
+    
+    
+    cap = capture_system()
+    if not cap:
+        sys.exit(1)
+    
+    
+    @app.route("/ping")
+    def ping():
+        return "pong"
+    
+    
+    @app.route("/capture")
+    def capture():
+        status, frame = cap.read()
+        if status:
+            return base64.b64encode(frame)
+        else:
+            return "Error"
+    
+    
+    # Binds on ALL IP addresses
+    # Accessible from networks, if no firewall is up
+    serving.run_simple("0.0.0.0", 8282, app)
+    ```
+
+-   Simple Client
+    
+    ```python
+    import base64
+    
+    import requests
+    import numpy as np
+    import cv2 as cv
+    
+    
+    host = "localhost"
+    port = 8282
+    server = f"http://{host}:{port}"
+    
+    
+    def get_capture():
+        resp = requests.get(f"{server}/capture")
+        content = resp.content
+        if content.decode() != "Error":
+            buf = np.frombuffer(base64.b64decode(resp.content), dtype=np.uint8)
+            # Need to know the buffer shape
+            buf = np.reshape(1080, 1920, 3)
+            show_image(buf)
+        else:
+            print("Error")
+    ```
+
+-   Slightly more sophisticated client/server<br/> Only the client/server functions shown here
+    
+    ```python
+    # Server function
+    # Need json to serialize dictionary
+    import json
+    @app.route("/capture")
+    def capture():
+        status, frame = cap.read()
+        if status:
+            return json.dumps({"frame": base64.b64encode(frame).decode("utf8"),
+                               "size": [*frame.shape]})
+        else:
+            return json.dumps({"frame": None, "size": None})
+    
+    
+    # Client function
+    def get_capture():
+        resp = requests.get(f"{server}/capture")
+        content = resp.json()
+        if content["frame"] is not None:
+            buf = np.frombuffer(base64.b64decode(content["frame"]), dtype=np.uint8)
+            buf = buf.reshape(content["size"])
+            show_image(buf)
+        else:
+            print("Error")
     ```
