@@ -2,7 +2,7 @@
 # Systems and Cameras
 
 
-<a id="orgf129c98"></a>
+<a id="org9bbee37"></a>
 
 ## Raspberry Pi, Arduino, Jetson
 
@@ -40,7 +40,7 @@ We focus on Raspberry Pi, Jetson
     -   Sketchy software support
 
 
-<a id="org6901a9c"></a>
+<a id="org7e14d26"></a>
 
 ## Interfacing with the System
 
@@ -50,7 +50,7 @@ We focus on Raspberry Pi, Jetson
     -   Useful for production deployment
 
 
-<a id="org8bcae5e"></a>
+<a id="org5871a76"></a>
 
 ### Generating user/password for initial login (RPI)
 
@@ -65,7 +65,7 @@ We focus on Raspberry Pi, Jetson
         Paste in `userconf.txt`
 
 
-<a id="org0803938"></a>
+<a id="orgbfb8249"></a>
 
 ### Connecting to via LAN (RPI, Jetson)
 
@@ -119,7 +119,7 @@ We focus on Raspberry Pi, Jetson
     ```
 
 
-<a id="orgf97faea"></a>
+<a id="orga337f82"></a>
 
 ### Connecting with SSH keys (RPI, Jetson)
 
@@ -132,7 +132,7 @@ ssh-copy-id user@pi_addr
 -   You can also have multiple keys but we won't discuss that here.
 
 
-<a id="org7158afe"></a>
+<a id="org4ecfdae"></a>
 
 ## Configuration options (RPI)
 
@@ -145,12 +145,12 @@ ssh-copy-id user@pi_addr
 -   `dt_overlay`
 
 
-<a id="org7c9edf6"></a>
+<a id="org655c36c"></a>
 
 ## Serial Communication (RPI)
 
 
-<a id="org69be209"></a>
+<a id="orgba6e08d"></a>
 
 ### The Raspberry Pi GPIO
 
@@ -169,14 +169,14 @@ But we'll disable the serial console and enable UART See <https://www.raspberryp
 For details on Raspberry Pi UART device tree, see:<br/> <https://www.raspberrypi.com/documentation/computers/configuration.html#uarts-and-device-tree>
 
 
-<a id="orgd413bb5"></a>
+<a id="org3b2794d"></a>
 
 ### Jetson GPIO
 
 We had a lot of trouble communicating with the Jetson GPIO that we had, so we decided to skip that entirely and use a USB to Serial module.
 
 
-<a id="orge752265"></a>
+<a id="org9824a76"></a>
 
 ### USB to Serial (RPI, Jetson)
 
@@ -185,14 +185,14 @@ The module that we found useful is a CP2102 USB to Serial converter. See <https:
 Essentially you can attach it to a free USB port and communicate via UART with the required sensor/driver/expansion board.
 
 
-<a id="org06e380a"></a>
+<a id="org1a4f0ba"></a>
 
 ### I2C Communication
 
 We don't have any modules with I2C so we won't discuss it.
 
 
-<a id="org84ab84a"></a>
+<a id="org1211e6f"></a>
 
 ## Cameras with RPi (RPI)
 
@@ -208,7 +208,7 @@ We don't have any modules with I2C so we won't discuss it.
     -   There are several other camera manufacturer alternatives for both RPI and Jetson
 
 
-<a id="orgc131505"></a>
+<a id="org38b3139"></a>
 
 ## Cameras with Jetson (Jetson)
 
@@ -217,12 +217,12 @@ RPi cameras will also work with Jetson in most cases
 We could not get autofocus/motorized focus cameras to work with RPis but they work with Jetson. This is probably because of some differences from RPi 3 -> 4 device changes
 
 
-<a id="org0146ffc"></a>
+<a id="orgd6a297f"></a>
 
 ## Code
 
 
-<a id="org3e39893"></a>
+<a id="orgf32a610"></a>
 
 ### Basic Image Processing with opencv (RPi, Jetson)
 
@@ -313,7 +313,7 @@ We could not get autofocus/motorized focus cameras to work with RPis but they wo
         ```
 
 
-<a id="orgbeac41a"></a>
+<a id="org1ed6b2a"></a>
 
 ### Taking pictures and videos with libcamera (RPi)
 
@@ -390,7 +390,7 @@ We could not get autofocus/motorized focus cameras to work with RPis but they wo
     ```
 
 
-<a id="org8ae0f5c"></a>
+<a id="org5dc0f58"></a>
 
 ### Taking pictures and videos with opencv (RPi, Jetson)
 
@@ -497,7 +497,7 @@ Opencv capture can be used with python and various backends.
     ```
 
 
-<a id="org05fa660"></a>
+<a id="orgb707cd3"></a>
 
 ### Basic Flask Service
 
@@ -522,7 +522,7 @@ serving.run_simple("127.0.0.1", 8282, app)
 ```
 
 
-<a id="org97fda26"></a>
+<a id="orgd6885d8"></a>
 
 ### Flask Service for Capturing and sending an image
 
@@ -538,11 +538,12 @@ serving.run_simple("127.0.0.1", 8282, app)
     
     import cv2 as cv
     
-    app = Flask()
+    app = Flask("app")
     
     def capture_system():
+        cap = cv.VideoCapture(0) # for laptop
         if cap.isOpened():
-            return cv.VideoCapture(0) # for laptop
+            return cap
     
     def pi_capture(width, height):
         gp = "libcamerasrc ! video/x-raw, width=1280, height=720 ! appsink"

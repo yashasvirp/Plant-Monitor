@@ -12,7 +12,7 @@
 A useful article giving an overview of various motors <https://www.instructables.com/Complete-Motor-Guide-for-Robotics/>
 
 
-<a id="org2ddc4fe"></a>
+<a id="org6aa6251"></a>
 
 ## Servo Motors
 
@@ -24,14 +24,14 @@ A useful article giving an overview of various motors <https://www.instructables
 <https://www.sparkfun.com/servos>
 
 
-<a id="org2ba7d51"></a>
+<a id="org1138798"></a>
 
 ### What's in a servo motor anyway?
 
 **TODO**
 
 
-<a id="org325e86c"></a>
+<a id="org7f3e954"></a>
 
 ## PWM
 
@@ -40,7 +40,7 @@ A useful article giving an overview of various motors <https://www.instructables
 -   How a driver interacts with servos
 
 
-<a id="org501b1f6"></a>
+<a id="org56129ef"></a>
 
 ## Powering the Servos
 
@@ -53,22 +53,7 @@ A useful article giving an overview of various motors <https://www.instructables
 -   Using the multimeters
 
 
-<a id="orgc8d8ced"></a>
-
-## DC Motors
-
--   **TODO**
-
-
-<a id="org3c444f1"></a>
-
-## Services and messages
-
--   [X] Flask as a simple service manager
--   [ ] Passing messages
-
-
-<a id="orgf476675"></a>
+<a id="org370e1c0"></a>
 
 ### I2C, UART and SPI
 
@@ -76,7 +61,7 @@ A useful article giving an overview of various motors <https://www.instructables
 -   <https://www.seeedstudio.com/blog/2019/09/25/uart-vs-i2c-vs-spi-communication-protocols-and-uses/>
 
 
-<a id="org68b7efa"></a>
+<a id="orge7abe64"></a>
 
 ## SC08A
 
@@ -85,9 +70,10 @@ A useful article giving an overview of various motors <https://www.instructables
 -   **Features**
     -   Get/Set position of multiple servos per command
     -   Allows to set speed in a single command
+-   See `code/sc08a`
 
 
-<a id="org2a64689"></a>
+<a id="org6a30fd9"></a>
 
 ## CH342
 
@@ -100,12 +86,12 @@ A useful article giving an overview of various motors <https://www.instructables
     -   Allows to set speed in a single command
 
 
-<a id="org1177edc"></a>
+<a id="orgc4c66f6"></a>
 
 ## Code
 
 
-<a id="org20c7d6a"></a>
+<a id="orgc41ffe5"></a>
 
 ### SC08A
 
@@ -114,7 +100,7 @@ A useful article giving an overview of various motors <https://www.instructables
 2.  Controller properties
 
 
-<a id="org4800c4f"></a>
+<a id="orgae3ca22"></a>
 
 ### Controlling the servos over the network
 
