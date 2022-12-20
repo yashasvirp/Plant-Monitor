@@ -12,7 +12,7 @@
 A useful article giving an overview of various motors <https://www.instructables.com/Complete-Motor-Guide-for-Robotics/>
 
 
-<a id="org6aa6251"></a>
+<a id="orgd58bc5e"></a>
 
 ## Servo Motors
 
@@ -24,14 +24,14 @@ A useful article giving an overview of various motors <https://www.instructables
 <https://www.sparkfun.com/servos>
 
 
-<a id="org1138798"></a>
+<a id="orgd18b846"></a>
 
 ### What's in a servo motor anyway?
 
 **TODO**
 
 
-<a id="org7f3e954"></a>
+<a id="orgb6f199a"></a>
 
 ## PWM
 
@@ -40,7 +40,7 @@ A useful article giving an overview of various motors <https://www.instructables
 -   How a driver interacts with servos
 
 
-<a id="org56129ef"></a>
+<a id="org8d0229e"></a>
 
 ## Powering the Servos
 
@@ -53,7 +53,7 @@ A useful article giving an overview of various motors <https://www.instructables
 -   Using the multimeters
 
 
-<a id="org370e1c0"></a>
+<a id="org651da6e"></a>
 
 ### I2C, UART and SPI
 
@@ -61,7 +61,7 @@ A useful article giving an overview of various motors <https://www.instructables
 -   <https://www.seeedstudio.com/blog/2019/09/25/uart-vs-i2c-vs-spi-communication-protocols-and-uses/>
 
 
-<a id="orge7abe64"></a>
+<a id="org998057a"></a>
 
 ## SC08A
 
@@ -70,10 +70,10 @@ A useful article giving an overview of various motors <https://www.instructables
 -   **Features**
     -   Get/Set position of multiple servos per command
     -   Allows to set speed in a single command
--   See `code/sc08a`
+-   See <https://github.com/uoh-robotics/workshop-2022/tree/main/code/sc08a>
 
 
-<a id="org6a30fd9"></a>
+<a id="orgdacfd22"></a>
 
 ## CH342
 
@@ -86,33 +86,58 @@ A useful article giving an overview of various motors <https://www.instructables
     -   Allows to set speed in a single command
 
 
-<a id="orgc4c66f6"></a>
+<a id="org1537673"></a>
 
 ## Code
 
 
-<a id="orgc41ffe5"></a>
+<a id="orgda042b2"></a>
 
 ### SC08A
 
 1.  Intializing the controller
 
+    -   Initialize the port
+        
+        ```python
+        import serial
+        
+        # sudo chmod 777 /dev/ttyUSB0
+        portname = "/dev/ttyUSB0" # substitute port for the name
+        baudrate = 9600
+        # Initialize serial port
+        port = serial.Serial(portname, baudrate, timeout=0.1, write_timeout=0.1)
+        ```
+        
+        In Raspberry Pi, if not using CP2102, port will be `/dev/ttyS0`
+    
+    -   Turn motors on/off
+        
+        ```python
+        channels = 1
+        first_byte = 0b11000000 | channels
+        # turn motors in channels on
+        port.write(bytes([first_byte, 1])) # 0 for off, 1 for on
+        ```
+
 2.  Controller properties
 
+    -   Read motor position
+        
+        ```python
+        channel = 1 # substitute with channel number
+        port.write(bytes([0b10100000 | channel]))
+        high, low = port.read(2)
+        print(int(bin(0b10000000 | high)[3:] + bin(0b1000000 | low)[3:], 2))
+        ```
 
-<a id="orgae3ca22"></a>
+
+<a id="orga0e2d96"></a>
 
 ### Controlling the servos over the network
 
--   Fetching things over the network Python `requests` module
-    
-    ```python
-    
-    ```
+**Following Covered in addendem to previous topic**
+
+-   Fetching things over the network
 -   Sending things over the network `Flask` package
-    
-    ```python
-    
-    ```
 -   Combining the two with a client/server mechanism
--   Integrating the servo control

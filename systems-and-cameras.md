@@ -2,7 +2,7 @@
 # Systems and Cameras
 
 
-<a id="org9bbee37"></a>
+<a id="orga003b07"></a>
 
 ## Raspberry Pi, Arduino, Jetson
 
@@ -40,7 +40,7 @@ We focus on Raspberry Pi, Jetson
     -   Sketchy software support
 
 
-<a id="org7e14d26"></a>
+<a id="org7c5c2e1"></a>
 
 ## Interfacing with the System
 
@@ -50,7 +50,7 @@ We focus on Raspberry Pi, Jetson
     -   Useful for production deployment
 
 
-<a id="org5871a76"></a>
+<a id="orgd7e694a"></a>
 
 ### Generating user/password for initial login (RPI)
 
@@ -65,7 +65,7 @@ We focus on Raspberry Pi, Jetson
         Paste in `userconf.txt`
 
 
-<a id="orgbfb8249"></a>
+<a id="org9bc469b"></a>
 
 ### Connecting to via LAN (RPI, Jetson)
 
@@ -119,7 +119,7 @@ We focus on Raspberry Pi, Jetson
     ```
 
 
-<a id="orga337f82"></a>
+<a id="org360fa3d"></a>
 
 ### Connecting with SSH keys (RPI, Jetson)
 
@@ -132,7 +132,7 @@ ssh-copy-id user@pi_addr
 -   You can also have multiple keys but we won't discuss that here.
 
 
-<a id="org4ecfdae"></a>
+<a id="org17f85b8"></a>
 
 ## Configuration options (RPI)
 
@@ -145,12 +145,12 @@ ssh-copy-id user@pi_addr
 -   `dt_overlay`
 
 
-<a id="org655c36c"></a>
+<a id="org6be8641"></a>
 
 ## Serial Communication (RPI)
 
 
-<a id="orgba6e08d"></a>
+<a id="org788160b"></a>
 
 ### The Raspberry Pi GPIO
 
@@ -169,14 +169,14 @@ But we'll disable the serial console and enable UART See <https://www.raspberryp
 For details on Raspberry Pi UART device tree, see:<br/> <https://www.raspberrypi.com/documentation/computers/configuration.html#uarts-and-device-tree>
 
 
-<a id="org3b2794d"></a>
+<a id="org8e2c6cc"></a>
 
 ### Jetson GPIO
 
 We had a lot of trouble communicating with the Jetson GPIO that we had, so we decided to skip that entirely and use a USB to Serial module.
 
 
-<a id="org9824a76"></a>
+<a id="org003efa4"></a>
 
 ### USB to Serial (RPI, Jetson)
 
@@ -185,14 +185,14 @@ The module that we found useful is a CP2102 USB to Serial converter. See <https:
 Essentially you can attach it to a free USB port and communicate via UART with the required sensor/driver/expansion board.
 
 
-<a id="org1a4f0ba"></a>
+<a id="orgbd94273"></a>
 
 ### I2C Communication
 
 We don't have any modules with I2C so we won't discuss it.
 
 
-<a id="org1211e6f"></a>
+<a id="org4112fbb"></a>
 
 ## Cameras with RPi (RPI)
 
@@ -208,7 +208,7 @@ We don't have any modules with I2C so we won't discuss it.
     -   There are several other camera manufacturer alternatives for both RPI and Jetson
 
 
-<a id="org38b3139"></a>
+<a id="org7b075cc"></a>
 
 ## Cameras with Jetson (Jetson)
 
@@ -217,12 +217,12 @@ RPi cameras will also work with Jetson in most cases
 We could not get autofocus/motorized focus cameras to work with RPis but they work with Jetson. This is probably because of some differences from RPi 3 -> 4 device changes
 
 
-<a id="orgd6a297f"></a>
+<a id="org5f6d1c4"></a>
 
 ## Code
 
 
-<a id="orgf32a610"></a>
+<a id="orgc70a858"></a>
 
 ### Basic Image Processing with opencv (RPi, Jetson)
 
@@ -313,7 +313,7 @@ We could not get autofocus/motorized focus cameras to work with RPis but they wo
         ```
 
 
-<a id="org1ed6b2a"></a>
+<a id="orgf7c0b75"></a>
 
 ### Taking pictures and videos with libcamera (RPi)
 
@@ -390,7 +390,7 @@ We could not get autofocus/motorized focus cameras to work with RPis but they wo
     ```
 
 
-<a id="org5dc0f58"></a>
+<a id="org6873f9c"></a>
 
 ### Taking pictures and videos with opencv (RPi, Jetson)
 
@@ -497,7 +497,7 @@ Opencv capture can be used with python and various backends.
     ```
 
 
-<a id="orgb707cd3"></a>
+<a id="orgb386a54"></a>
 
 ### Basic Flask Service
 
@@ -522,7 +522,7 @@ serving.run_simple("127.0.0.1", 8282, app)
 ```
 
 
-<a id="orgd6885d8"></a>
+<a id="org708d948"></a>
 
 ### Flask Service for Capturing and sending an image
 

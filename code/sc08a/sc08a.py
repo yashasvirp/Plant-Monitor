@@ -148,10 +148,12 @@ class Service:
            status should be stored internally
 
     """
-    def __init__(self, pins: List[int], port: str, baudrate: Optional[int] = None):
+    def __init__(self, pins: List[int], port: str, baudrate: Optional[int] = None,
+                 http_port: Optional[int] = None):
         self.pins = pins
         self.port = port
-        self.badurate = baudrate or 9600
+        self.baudrate = baudrate or 9600
+        self.http_port = http_port or 2233
         self.app = Flask("Servo")
         self.init_routes()
 
@@ -209,7 +211,7 @@ class Service:
             return "Initialized the controller"
 
     def start(self):
-        serving.run_simple("0.0.0.0", 2233, self.app, threaded=True)
+        serving.run_simple("0.0.0.0", self.http_port, self.app, threaded=True)
 
 
 def test_servo(servo, channel, pos_a=500, pos_b=8000, spd_a=100, spd_b=200):
@@ -241,8 +243,9 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--pins", required=True, help="List of comma separated pins")
     parser.add_argument("--port", required=True, help="The serial port")
+    parser.add_argument("--http-port", help="The HTTP port on which to serve")
     parser.add_argument("--baudrate", help="Baudrate for the serial port")
     args = parser.parse_args()
     pins = args.pins.split(",")
-    service = Service([*map(int, pins)], args.port, args.baudrate)
+    service = Service([*map(int, pins)], args.port, args.baudrate, args.http_port)
     service.start()
