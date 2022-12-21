@@ -12,7 +12,7 @@
 A useful article giving an overview of various motors <https://www.instructables.com/Complete-Motor-Guide-for-Robotics/>
 
 
-<a id="orgd58bc5e"></a>
+<a id="org3b02d3f"></a>
 
 ## Servo Motors
 
@@ -24,14 +24,14 @@ A useful article giving an overview of various motors <https://www.instructables
 <https://www.sparkfun.com/servos>
 
 
-<a id="orgd18b846"></a>
+<a id="org1684e6c"></a>
 
 ### What's in a servo motor anyway?
 
 **TODO**
 
 
-<a id="orgb6f199a"></a>
+<a id="org3748906"></a>
 
 ## PWM
 
@@ -40,7 +40,7 @@ A useful article giving an overview of various motors <https://www.instructables
 -   How a driver interacts with servos
 
 
-<a id="org8d0229e"></a>
+<a id="orgbd0b933"></a>
 
 ## Powering the Servos
 
@@ -53,7 +53,7 @@ A useful article giving an overview of various motors <https://www.instructables
 -   Using the multimeters
 
 
-<a id="org651da6e"></a>
+<a id="org8336222"></a>
 
 ### I2C, UART and SPI
 
@@ -61,7 +61,7 @@ A useful article giving an overview of various motors <https://www.instructables
 -   <https://www.seeedstudio.com/blog/2019/09/25/uart-vs-i2c-vs-spi-communication-protocols-and-uses/>
 
 
-<a id="org998057a"></a>
+<a id="orgf0a01d1"></a>
 
 ## SC08A
 
@@ -73,7 +73,7 @@ A useful article giving an overview of various motors <https://www.instructables
 -   See <https://github.com/uoh-robotics/workshop-2022/tree/main/code/sc08a>
 
 
-<a id="orgdacfd22"></a>
+<a id="org2241456"></a>
 
 ## CH342
 
@@ -86,12 +86,12 @@ A useful article giving an overview of various motors <https://www.instructables
     -   Allows to set speed in a single command
 
 
-<a id="org1537673"></a>
+<a id="orgefbd755"></a>
 
 ## Code
 
 
-<a id="orgda042b2"></a>
+<a id="orgc02979a"></a>
 
 ### SC08A
 
@@ -132,7 +132,7 @@ A useful article giving an overview of various motors <https://www.instructables
         ```
 
 
-<a id="orga0e2d96"></a>
+<a id="orgef97f86"></a>
 
 ### Controlling the servos over the network
 
@@ -141,3 +141,40 @@ A useful article giving an overview of various motors <https://www.instructables
 -   Fetching things over the network
 -   Sending things over the network `Flask` package
 -   Combining the two with a client/server mechanism
+
+
+<a id="orgbf589d3"></a>
+
+### Controlling a servo on embedded system via keyboard on laptop
+
+-   Python input is very slow
+-   For instantaneous keyboard capture we need some good GUI library
+-   We'll use opencv again as our experiment will be simple
+-   Objectives:
+    
+    1.  Attach a servo on embedded system with CP2102
+    2.  Start a service with SCO08A controller
+    3.  Instead of sending `set_pos` etc., we'll only send `clockwise` and `anti_clockwise`
+    
+    ```python
+    # 1. On the Jetson/Raspberry Pi, start the service
+    # 2. Define the delta to move clockwise/counter_clockwise
+    # 3. Write the move clockwise/counter_clockwise functions
+    
+    # On the laptop to capture the key number with opencv
+    import cv2 as cv
+    import numpy as np
+    
+    while True:
+        try:
+            cv.imshow("test", np.zeros([8, 8, 3], dtype=np.uint8))
+            key = cv.waitKey(0)
+            # depending on the value of the key send the command via
+            # requests.get()
+            if key == ord("q"):
+                break
+            print(key)
+        except KeyboardInterrupt:
+            break
+    cv.destroyAllWindows()
+    ```
