@@ -12,7 +12,7 @@
 A useful article giving an overview of various motors <https://www.instructables.com/Complete-Motor-Guide-for-Robotics/>
 
 
-<a id="org3b02d3f"></a>
+<a id="org25f51b6"></a>
 
 ## Servo Motors
 
@@ -24,14 +24,14 @@ A useful article giving an overview of various motors <https://www.instructables
 <https://www.sparkfun.com/servos>
 
 
-<a id="org1684e6c"></a>
+<a id="org43c2dcd"></a>
 
 ### What's in a servo motor anyway?
 
 **TODO**
 
 
-<a id="org3748906"></a>
+<a id="org9485595"></a>
 
 ## PWM
 
@@ -40,7 +40,7 @@ A useful article giving an overview of various motors <https://www.instructables
 -   How a driver interacts with servos
 
 
-<a id="orgbd0b933"></a>
+<a id="org0086f53"></a>
 
 ## Powering the Servos
 
@@ -53,7 +53,7 @@ A useful article giving an overview of various motors <https://www.instructables
 -   Using the multimeters
 
 
-<a id="org8336222"></a>
+<a id="org3c25783"></a>
 
 ### I2C, UART and SPI
 
@@ -61,7 +61,7 @@ A useful article giving an overview of various motors <https://www.instructables
 -   <https://www.seeedstudio.com/blog/2019/09/25/uart-vs-i2c-vs-spi-communication-protocols-and-uses/>
 
 
-<a id="orgf0a01d1"></a>
+<a id="org8e180cc"></a>
 
 ## SC08A
 
@@ -73,7 +73,7 @@ A useful article giving an overview of various motors <https://www.instructables
 -   See <https://github.com/uoh-robotics/workshop-2022/tree/main/code/sc08a>
 
 
-<a id="org2241456"></a>
+<a id="org8c8ceed"></a>
 
 ## CH342
 
@@ -86,12 +86,12 @@ A useful article giving an overview of various motors <https://www.instructables
     -   Allows to set speed in a single command
 
 
-<a id="orgefbd755"></a>
+<a id="org0bb3486"></a>
 
 ## Code
 
 
-<a id="orgc02979a"></a>
+<a id="org43f2180"></a>
 
 ### SC08A
 
@@ -132,7 +132,7 @@ A useful article giving an overview of various motors <https://www.instructables
         ```
 
 
-<a id="orgef97f86"></a>
+<a id="orge169a34"></a>
 
 ### Controlling the servos over the network
 
@@ -143,7 +143,7 @@ A useful article giving an overview of various motors <https://www.instructables
 -   Combining the two with a client/server mechanism
 
 
-<a id="orgbf589d3"></a>
+<a id="org82daa6b"></a>
 
 ### Controlling a servo on embedded system via keyboard on laptop
 
