@@ -225,6 +225,9 @@ We need the following to complete the task:
         low_val = np.array([*map(int, args.low_val.split(","))])
         high_val = np.array([*map(int, args.high_val.split(","))])
         main(args.width, args.height, low_val, high_val)
+
+    # Example file calling
+    # python red_detect.py -w 800 -h 600 -lv 163,74,30 -hv 179,255,255
     ```
 -   Faster image transfer with jpeg encoding
     
