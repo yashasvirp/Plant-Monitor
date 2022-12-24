@@ -31,10 +31,10 @@ class VideoCapture:
     def __init__(self, pipeline, cap_type):
         self._cap = cv.VideoCapture(pipeline, cap_type)
         self.q = Queue()
-        self._reader_thread = Thread(target=self._reader)
-        self._reader_thread.start()
         self._should_read = Event()
         self._should_read.set()
+        self._reader_thread = Thread(target=self._reader)
+        self._reader_thread.start()
 
     # read frames as soon as they are available, keeping only most recent one
     def _reader(self):

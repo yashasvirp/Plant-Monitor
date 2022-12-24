@@ -2,7 +2,7 @@
 # 2 DOF arm
 
 
-<a id="org9ffa1b1"></a>
+<a id="orgbaee1ee"></a>
 
 ## Building a 2DOF robot arm with camera
 
@@ -11,7 +11,7 @@
 -   After that program the arm to track it based on distance from the red ball
 
 
-<a id="org8950784"></a>
+<a id="org19b2033"></a>
 
 ## Tracking a red object manually
 
@@ -31,10 +31,10 @@ We need the following to complete the task:
         def __init__(self, pipeline, cap_type):
             self._cap = cv.VideoCapture(pipeline, cap_type)
             self.q = Queue()
-            self._reader_thread = Thread(target=self._reader)
-            self._reader_thread.start()
             self._should_read = Event()
             self._should_read.set()
+            self._reader_thread = Thread(target=self._reader)
+            self._reader_thread.start()
     
         # read frames as soon as they are available, keeping only most recent one
         def _reader(self):
@@ -225,7 +225,6 @@ We need the following to complete the task:
         low_val = np.array([*map(int, args.low_val.split(","))])
         high_val = np.array([*map(int, args.high_val.split(","))])
         main(args.width, args.height, low_val, high_val)
-
     # Example file calling
     # python red_detect.py -w 800 -h 600 -lv 163,74,30 -hv 179,255,255
     ```
@@ -269,24 +268,3 @@ We need the following to complete the task:
         y_mid = int((y + y + h) / 2)
         return x_mid, y_mid
     ```
--   [ ] Object tracking
-
-
-<a id="org64adca1"></a>
-
-### Object detection of a specific color with opencv (RPi, Jetson)
-
--   Capture image from camera
--   Convert to HSV
--   Detect in image
--   Draw bounding box around it
-
-
-<a id="orge50f8c7"></a>
-
-### Streaming Video/image streams over the network
-
--   Approach 1<br/> Use `TCP` with `picamera2`
--   Approach 2<br/> Use `HTTP` streaming with `ffmpeg`
--   Approach 3<br/> Use `HTTP` service with frames on demand with `gstreamer+OpenCV` capture
--   Approach 3.1<br/> Use `HTTP` service with frames on demand with a separate thread for bufferless capture with `gstreamer+OpenCV`
