@@ -100,23 +100,27 @@ class RemoteClient:
                               flags=cv.IMREAD_COLOR)
             if self._convert:
                 img = img[:, :, ::-1]
-            if key == 81:
-                resp = requests.get(f"{server}/go_left")
-                print("Going left")
-            if key == 82:
-                resp = requests.get(f"{server}/go_up")
-                print("Going up")
-            elif key == 83:
-                resp = requests.get(f"{server}/go_right")
-                print("Going right")
-            elif key == 84:
-                resp = requests.get(f"{server}/go_down")
-                print("Going down")
-            # elif key == ord("a"):
-            #     print("Setting new Rotation")
-            elif key == ord("q") or key == 27:
-                print("Aborted Rotation")
-                break
+            
+            if key in [1,2,3,4]:
+                pin = key
+            else:
+                if key == 81:
+                    resp = requests.get(f"{server}/go_left?pin={pin}")
+                    print("Going left")
+                if key == 82:
+                    resp = requests.get(f"{server}/go_up")
+                    print("Going up")
+                elif key == 83:
+                    resp = requests.get(f"{server}/go_right?pin={pin}")
+                    print("Going right")
+                elif key == 84:
+                    resp = requests.get(f"{server}/go_down")
+                    print("Going down")
+                # elif key == ord("a"):
+                #     print("Setting new Rotation")
+                elif key == ord("q") or key == 27:
+                    print("Aborted Rotation")
+                    break
             try:
                 # contours, mask = get_contours_and_mask_bgr(img, self._low_val, self._high_val)
                 contours, mask = get_contours_and_mask_hsv(img, self._low_val, self._high_val)
@@ -139,4 +143,4 @@ if __name__ == '__main__':
     args = parser.parse_args()
     client = RemoteClient(args.host, args.port, img_size=[640, 480],
                           low_val=low_red, high_val=high_red)
-    client.simple_agent()
+    client.manual_remote_tracking()

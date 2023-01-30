@@ -134,8 +134,8 @@ class TwoDOFArm:
         self.controller.set_pos_speed(pin, pos, speed)
         return f"Setting position for motor: {pin} at: {pos} and speed: {speed}"
 
-    def _go_left_right(self, lr, speed, delta=None):
-        pin = self.pins["left_right"]
+    def _go_left_right(self, lr, speed, pins, delta=None):
+        pin = self.pins["{}_left_right".format(pins)]
         cur_pos = self.controller.get_pos(pin)
         delta = delta or self.default_increment
         if lr == "left":
@@ -225,17 +225,17 @@ class TwoDOFArm:
             delta = _maybe_get_delta(request)
             return self._move_vertical(speed, delta)
 
-        @self.app.route("/go_left", methods=["GET"])
-        def _go_left():
+        @self.app.route("/go_left/<int:pin>", methods=["GET"])
+        def _go_left(pin):
             speed = _maybe_get_speed(request)
             delta = _maybe_get_delta(request)
-            return self._go_left_right("left", speed, delta)
+            return self._go_left_right("left", speed, pin, delta)
 
-        @self.app.route("/go_right", methods=["GET"])
-        def _go_right():
+        @self.app.route("/go_right/<int:pin>", methods=["GET"])
+        def _go_right(pin):
             speed = _maybe_get_speed(request)
             delta = _maybe_get_delta(request)
-            return self._go_left_right("right", speed, delta)
+            return self._go_left_right("right", speed, pin, delta)
 
         @self.app.route("/go_up", methods=["GET"])
         def _go_up():
@@ -279,5 +279,5 @@ class TwoDOFArm:
 
 
 if __name__ == '__main__':
-    arm = TwoDOFArm(640, 480, 8080, {"left_right": 1, "up_down": 2}, "/dev/ttyUSB0")
+    arm = TwoDOFArm(640, 480, 8080, {"1_left_right": 1, "2_left_right": 2, "3_left_right": 3, "4_left_right": 4}, "/dev/ttyUSB0")
     arm.start()
