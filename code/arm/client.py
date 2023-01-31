@@ -7,8 +7,7 @@ import numpy as np
 import cv2 as cv
 
 from common_pyutil.monitor import Timer
-from object_tracking import (get_contours_and_mask_hsv, get_midpoints,
-                             draw_bounding_rect_for_contour)
+from red_detect import (get_contours_and_mask_hsv, get_midpoints, draw_bounding_rect_for_contour)
 
 
 timer = Timer()
@@ -101,7 +100,7 @@ class RemoteClient:
             if self._convert:
                 img = img[:, :, ::-1]
             
-            if key in [1,2,3,4]:
+            if key in [ord("1")-ord("0"), ord("2")-ord("0"), ord("3")-ord("0"), ord("4")-ord("0")]:
                 pin = key
             else:
                 if key == 81:

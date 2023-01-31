@@ -96,7 +96,7 @@ class TwoDOFArm:
         self.pins = pins
         self.serial_port = serial_port
         self.baudrate = baudrate
-        self.init_controller()
+        self.init_controller(pins)
         self.default_speed = 100
         self.default_increment = 100
         self.app = Flask("Servo")
@@ -110,9 +110,16 @@ class TwoDOFArm:
             self._cap.release()
         self._cap = cv.VideoCapture(self._gst_pipeline, cv.CAP_GSTREAMER)
 
-    def init_controller(self):
+    def init_controller(self, pins: Dict[str, int]):
         self.controller = SC08A(self.serial_port, self.baudrate)
         self.controller.init_all_motors()
+        for pin in pins.values():
+            self.controller.set_pos_speed(pin, 4000, 50)
+
+
+    def stop_controller(self):
+        #self.controller = SC08A(self.serial_port, self.baudrate)
+        self.controller.shutdown()
 
     def start(self):
         self.init_routes()
@@ -281,3 +288,5 @@ class TwoDOFArm:
 if __name__ == '__main__':
     arm = TwoDOFArm(640, 480, 8080, {"1_left_right": 1, "2_left_right": 2, "3_left_right": 3, "4_left_right": 4}, "/dev/ttyUSB0")
     arm.start()
+    #arm.stop_controller()
+    
